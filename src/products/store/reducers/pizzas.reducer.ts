@@ -13,7 +13,26 @@ export interface PizzaState {
 
 // create the initial state of the Pizza as type PizzaState
 export const initialState: PizzaState = {
-    data: [],
+    data: [
+        {
+            "name": "Blazin' Inferno",
+            "toppings": [
+              {
+                "id": 10,
+                "name": "pepperoni"
+              },
+              {
+                "id": 3,
+                "name": "basil"
+              },
+              {
+                "id": 4,
+                "name": "chili"
+              }
+            ],
+            "id": 1
+          }
+    ],
     loaded: false,
     loading: false
 };
@@ -53,3 +72,8 @@ export function reducer (
 
     return state;
 }
+
+// export some levels of state
+export const getPizzasLoading = (state: PizzaState) => state.loading;
+export const getPizzasLoaded = (state: PizzaState) => state.loaded;
+export const getPizzas = (state: PizzaState) => state.data;

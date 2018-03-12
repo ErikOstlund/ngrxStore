@@ -1,5 +1,5 @@
 // type checking for reducers
-import { ActionReducerMap } from '@ngrx/store';
+import { ActionReducerMap, createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as fromPizzas from './pizzas.reducer';
 
@@ -15,3 +15,32 @@ export const reducers: ActionReducerMap<ProductsState> = {
     // type checking
     pizzas: fromPizzas.reducer
 };
+
+// these are selectors. we have to start at the top level and work our way down
+// 'products' comes from the feature module (products.module)
+// ****** 'product' LEVEL ******
+export const getProductsState = createFeatureSelector<ProductsState>('products');
+
+// composes our top level getProductsState
+// ****** pizza LEVEL ******
+export const getPizzaState = createSelector(
+    getProductsState,
+    (state: ProductsState) => state.pizzas
+);
+
+
+// returns the state of a pizza: getPizzas, getPizzasLoaded, getPizzasLoading
+export const getAllPizzas = createSelector(
+    getPizzaState,
+    fromPizzas.getPizzas
+);
+
+export const getPizzasLoaded = createSelector(
+    getPizzaState,
+    fromPizzas.getPizzasLoaded
+);
+
+export const getPizzasLoading = createSelector(
+    getPizzaState,
+    fromPizzas.getPizzasLoading
+);

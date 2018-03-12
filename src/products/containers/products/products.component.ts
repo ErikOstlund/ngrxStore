@@ -1,7 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
+// store
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+import * as fromStore from '../../store'; // selectors
+
+// interfaces
 import { Pizza } from '../../models/pizza.model';
-import { PizzasService } from '../../services/pizzas.service';
 
 @Component({
   selector: 'products',
@@ -16,11 +21,11 @@ import { PizzasService } from '../../services/pizzas.service';
         </a>
       </div>
       <div class="products__list">
-        <div *ngIf="!((pizzas)?.length)">
+        <div *ngIf="!((pizzas$ | async)?.length)">
           No pizzas, add one to get started.
         </div>
         <pizza-item
-          *ngFor="let pizza of (pizzas)"
+          *ngFor="let pizza of (pizzas$ | async)"
           [pizza]="pizza">
         </pizza-item>
       </div>
@@ -28,13 +33,13 @@ import { PizzasService } from '../../services/pizzas.service';
   `,
 })
 export class ProductsComponent implements OnInit {
-  pizzas: Pizza[];
+    pizzas$: Observable<Pizza[]>;
 
-  constructor(private pizzaService: PizzasService) {}
+    // type checking: means we can only gain access to state in our store of type ProductsState
+    // which makes sense, because we are in the product component
+    constructor(private store: Store<fromStore.ProductsState>) {}
 
-  ngOnInit() {
-    this.pizzaService.getPizzas().subscribe(pizzas => {
-      this.pizzas = pizzas;
-    });
-  }
+    ngOnInit() {
+        this.pizzas$ = this.store.select(fromStore.getAllPizzas);
+    }
 }
