@@ -1,5 +1,5 @@
-// import all possible actions from our pizza.action file
-import * as fromPizza from '../actions/pizzas.action';
+// import all actions from our pizza.action file
+import * as fromPizzas from '../actions/pizzas.action';
 
 // interfaces
 import { Pizza } from '../../models/pizza.model';
@@ -13,38 +13,18 @@ export interface PizzaState {
 
 // create the initial state of the Pizza as type PizzaState
 export const initialState: PizzaState = {
-    data: [
-        {
-            "name": "Blazin' Inferno",
-            "toppings": [
-              {
-                "id": 10,
-                "name": "pepperoni"
-              },
-              {
-                "id": 3,
-                "name": "basil"
-              },
-              {
-                "id": 4,
-                "name": "chili"
-              }
-            ],
-            "id": 1
-          }
-    ],
+    data: [],
     loaded: false,
     loading: false
 };
 
-export function reducer (
+export function reducer(
     state = initialState,
-    action: fromPizza.PizzaAction  // sets type from pizza.action file (the exported type, PizzaAction )
+    action: fromPizzas.PizzasAction // sets type from pizza.action file (the exported type, PizzaAction )
 ): PizzaState {
-
     // switch statement based on the action type
-    switch(action.type) {
-        case fromPizza.LOAD_PIZZAS: {
+    switch (action.type) {
+        case fromPizzas.LOAD_PIZZAS: {
             // return new state by
             // merging the initial state with the updated property
             return {
@@ -53,15 +33,17 @@ export function reducer (
             };
         }
 
-        case fromPizza.LOAD_PIZZAS_SUCCESS: {
+        case fromPizzas.LOAD_PIZZAS_SUCCESS: {
+            const data = action.payload;
             return {
                 ...state,
                 loading: false,
-                loaded: true
+                loaded: true,
+                data
             };
         }
 
-        case fromPizza.LOAD_PIZZAS_FAIL: {
+        case fromPizzas.LOAD_PIZZAS_FAIL: {
             return {
                 ...state,
                 loading: false,

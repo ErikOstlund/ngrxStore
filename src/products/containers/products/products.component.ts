@@ -9,9 +9,9 @@ import * as fromStore from '../../store'; // selectors
 import { Pizza } from '../../models/pizza.model';
 
 @Component({
-  selector: 'products',
-  styleUrls: ['products.component.scss'],
-  template: `
+    selector: 'products',
+    styleUrls: ['products.component.scss'],
+    template: `
     <div class="products">
       <div class="products__new">
         <a
@@ -30,7 +30,7 @@ import { Pizza } from '../../models/pizza.model';
         </pizza-item>
       </div>
     </div>
-  `,
+  `
 })
 export class ProductsComponent implements OnInit {
     pizzas$: Observable<Pizza[]>;
@@ -41,5 +41,6 @@ export class ProductsComponent implements OnInit {
 
     ngOnInit() {
         this.pizzas$ = this.store.select(fromStore.getAllPizzas);
+        this.store.dispatch(new fromStore.LoadPizzas());
     }
 }

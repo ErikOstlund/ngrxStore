@@ -6,7 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 // store
 import { StoreModule } from '@ngrx/store';
-import { reducers } from './store';
+import { EffectsModule } from '@ngrx/effects';
+import { reducers, effects } from './store';
 
 // components
 import * as fromComponents from './components';
@@ -19,31 +20,32 @@ import * as fromServices from './services';
 
 // routes
 export const ROUTES: Routes = [
-  {
-    path: '',
-    component: fromContainers.ProductsComponent,
-  },
-  {
-    path: ':id',
-    component: fromContainers.ProductItemComponent,
-  },
-  {
-    path: 'new',
-    component: fromContainers.ProductItemComponent,
-  },
+    {
+        path: '',
+        component: fromContainers.ProductsComponent
+    },
+    {
+        path: ':id',
+        component: fromContainers.ProductItemComponent
+    },
+    {
+        path: 'new',
+        component: fromContainers.ProductItemComponent
+    }
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    RouterModule.forChild(ROUTES),
-    // register the StoreModule and all our reducers with the productModule
-    StoreModule.forFeature('products', reducers)
-  ],
-  providers: [...fromServices.services],
-  declarations: [...fromContainers.containers, ...fromComponents.components],
-  exports: [...fromContainers.containers, ...fromComponents.components],
+    imports: [
+        CommonModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        RouterModule.forChild(ROUTES),
+        // register the StoreModule and all our reducers with the productModule
+        StoreModule.forFeature('products', reducers),
+        EffectsModule.forFeature(effects)
+    ],
+    providers: [...fromServices.services],
+    declarations: [...fromContainers.containers, ...fromComponents.components],
+    exports: [...fromContainers.containers, ...fromComponents.components]
 })
 export class ProductsModule {}

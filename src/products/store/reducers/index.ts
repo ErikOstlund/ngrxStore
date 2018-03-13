@@ -16,7 +16,8 @@ export const reducers: ActionReducerMap<ProductsState> = {
     pizzas: fromPizzas.reducer
 };
 
-// these are selectors. we have to start at the top level and work our way down
+// these are selectors.
+// we have to start at the top level and work our way down
 // 'products' comes from the feature module (products.module)
 // ****** 'product' LEVEL ******
 export const getProductsState = createFeatureSelector<ProductsState>('products');

@@ -5,14 +5,14 @@
   "license": "MIT",
   "scripts": {
     "build": "cross-env NODE_ENV=production webpack -p",
-    "build:dev":
-      "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
+    "build:dev": "cross-env NODE_ENV=development webpack-dev-server --inline --hot",
     "build:production": "npm run clean && npm run build",
     "clean": "rimraf build",
     "start": "npm run build:dev",
     "test": "karma start ./karma.conf.js"
   },
   "devDependencies": {
+    "@angular/cli": "^1.7.3",
     "@angular/compiler": "5.0.3",
     "@angular/compiler-cli": "5.0.3",
     "@ngtools/webpack": "1.7.1",
@@ -43,7 +43,7 @@
     "raw-loader": "0.5.1",
     "rimraf": "2.6.2",
     "sass-loader": "6.0.6",
-    "typescript": "2.6.1",
+    "typescript": "^2.4.2",
     "webpack": "3.6.0",
     "webpack-dev-server": "2.8.2"
   },
