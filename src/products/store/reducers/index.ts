@@ -1,9 +1,5 @@
 // type checking for reducers
-import {
-    ActionReducerMap,
-    createSelector,
-    createFeatureSelector
-} from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 
 import * as fromPizzas from './pizzas.reducer';
 
@@ -26,32 +22,4 @@ export const reducers: ActionReducerMap<ProductsState> = {
 // ****** 'product' LEVEL ******
 export const getProductsState = createFeatureSelector<ProductsState>(
     'products'
-);
-
-// composes our top level getProductsState
-// ****** pizza LEVEL ******
-export const getPizzaState = createSelector(
-    getProductsState,
-    (state: ProductsState) => state.pizzas
-);
-
-// returns the state of a pizza: getPizzas, getPizzasLoaded, getPizzasLoading
-export const getPizzasEntities = createSelector(
-    getPizzaState,
-    fromPizzas.getPizzasEntities
-);
-
-// returns the pizzas as an object; not an array!
-export const getAllPizzas = createSelector(getPizzasEntities, entities => {
-    return Object.keys(entities).map(id => entities[parseInt(id, 10)]);
-});
-
-export const getPizzasLoaded = createSelector(
-    getPizzaState,
-    fromPizzas.getPizzasLoaded
-);
-
-export const getPizzasLoading = createSelector(
-    getPizzaState,
-    fromPizzas.getPizzasLoading
 );
